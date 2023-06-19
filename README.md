@@ -1,21 +1,11 @@
 # This is my package postal-codes
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/awcodes/postal-codes.svg?style=flat-square)](https://packagist.org/packages/awcodes/postal-codes)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/awcodes/postal-codes/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/awcodes/postal-codes/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/awcodes/postal-codes/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/awcodes/postal-codes/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/awcodes/postal-codes.svg?style=flat-square)](https://packagist.org/packages/awcodes/postal-codes)
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+This is a package to easily install and use postal codes in your Laravel application. All data is provided by [GeoNames](https://www.geonames.org/) data dumps. You can see the available countries at [https://download.geonames.org/export/zip/](https://download.geonames.org/export/zip/).
 
-## Support us
-
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/postal-codes.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/postal-codes)
-
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
-
-## Installation
+## Installation & Usage
 
 You can install the package via composer:
 
@@ -23,43 +13,16 @@ You can install the package via composer:
 composer require awcodes/postal-codes
 ```
 
-You can publish and run the migrations with:
+After installing the package, you should run the installation script. This will publish the migrations and offer to run them for you.
 
 ```bash
-php artisan vendor:publish --tag="postal-codes-migrations"
-php artisan migrate
+php artisan postal-codes:install
 ```
 
-You can publish the config file with:
+Then the only thing left to do is to seed your data. This can be done with the `postal-codes:seed` command.
 
 ```bash
-php artisan vendor:publish --tag="postal-codes-config"
-```
-
-This is the contents of the published config file:
-
-```php
-return [
-];
-```
-
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag="postal-codes-views"
-```
-
-## Usage
-
-```php
-$postalCodes = new Awcodes\PostalCodes();
-echo $postalCodes->echoPhrase('Hello, Awcodes!');
-```
-
-## Testing
-
-```bash
-composer test
+php artisan postal-codes:seed {country=US}
 ```
 
 ## Changelog

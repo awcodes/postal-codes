@@ -2,9 +2,9 @@
 
 namespace Awcodes\PostalCodes\Tests;
 
+use Awcodes\PostalCodes\PostalCodesServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Awcodes\PostalCodes\PostalCodesServiceProvider;
 
 class TestCase extends Orchestra
 {
