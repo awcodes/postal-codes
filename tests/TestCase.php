@@ -4,10 +4,13 @@ namespace Awcodes\PostalCodes\Tests;
 
 use Awcodes\PostalCodes\PostalCodesServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
 {
+    use LazilyRefreshDatabase;
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -17,20 +20,18 @@ class TestCase extends Orchestra
         );
     }
 
-    protected function getPackageProviders($app)
+    protected function getPackageProviders($app): array
     {
         return [
             PostalCodesServiceProvider::class,
         ];
     }
 
-    public function getEnvironmentSetUp($app)
+    public function getEnvironmentSetUp($app): void
     {
-        config()->set('database.default', 'testing');
+        $app['config']->set('database.default', 'testing');
 
-        /*
-        $migration = include __DIR__.'/../database/migrations/create_postal-codes_table.php.stub';
+        $migration = include __DIR__.'/../database/migrations/create_postal_codes_table.php.stub';
         $migration->up();
-        */
     }
 }
