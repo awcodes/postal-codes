@@ -9,7 +9,7 @@ use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithCustomCsvSettings;
 use Maatwebsite\Excel\Concerns\WithProgressBar;
 
-class PostalCodeImport implements ToModel, WithCustomCsvSettings, WithBatchInserts, WithProgressBar
+class PostalCodeImport implements ToModel, WithBatchInserts, WithCustomCsvSettings, WithProgressBar
 {
     use Importable;
 

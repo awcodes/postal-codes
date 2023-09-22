@@ -5,6 +5,7 @@ namespace Awcodes\PostalCodes\Commands;
 use Awcodes\PostalCodes\Imports\PostalCodeImport;
 use Exception;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use ZipArchive;
@@ -18,6 +19,8 @@ class PostalCodesSeederCommand extends Command
     public function handle(): int
     {
         $countryCode = $this->argument('country');
+
+        DB::table('postal_codes')->truncate();
 
         if (! Storage::disk('local')->exists("{$countryCode}.zip")) {
             $zipFile = Http::get("https://download.geonames.org/export/zip/{$countryCode}.zip");
