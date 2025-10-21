@@ -12,7 +12,7 @@ class PostalCode extends Model
 
     protected static function newFactory(): PostalCodeFactory
     {
-        return new PostalCodeFactory();
+        return new PostalCodeFactory;
     }
 
     protected $fillable = [

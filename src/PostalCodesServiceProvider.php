@@ -14,6 +14,7 @@ class PostalCodesServiceProvider extends PackageServiceProvider
         $package
             ->name('postal-codes')
             ->hasMigration('create_postal_codes_table')
+            ->runsMigrations()
             ->hasCommand(PostalCodesSeederCommand::class)
             ->hasInstallCommand(function (InstallCommand $command) {
                 $command

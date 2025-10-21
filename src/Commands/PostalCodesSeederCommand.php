@@ -35,7 +35,7 @@ class PostalCodesSeederCommand extends Command
 
             file_put_contents($zipFilePath, $zipFile->body());
 
-            $zip = new ZipArchive();
+            $zip = new ZipArchive;
 
             if ($zip->open($zipFilePath) === true) {
                 $zip->extractTo(storage_path('app'));

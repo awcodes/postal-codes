@@ -13,7 +13,7 @@ You can install the package via composer:
 composer require awcodes/postal-codes
 ```
 
-After installing the package, you should run the installation script. This will publish the migrations and offer to run them for you.
+If you need to publish the migration you may do so with:
 
 ```bash
 php artisan postal-codes:install
