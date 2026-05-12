@@ -5,6 +5,8 @@
 
 This is a package to easily install and use postal codes in your Laravel application. All data is provided by [GeoNames](https://www.geonames.org/) data dumps. You can see the available countries at [https://download.geonames.org/export/zip/](https://download.geonames.org/export/zip/).
 
+<!-- [docs_start] -->
+
 ## Installation & Usage
 
 You can install the package via composer:
@@ -24,6 +26,8 @@ Then the only thing left to do is to seed your data. This can be done with the `
 ```bash
 php artisan postal-codes:seed {country=US}
 ```
+
+<!-- [docs_end] -->
 
 ## Changelog
 
