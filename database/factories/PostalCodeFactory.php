@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Awcodes\PostalCodes\Database\Factories;
 
 use Awcodes\PostalCodes\Models\PostalCode;
@@ -16,7 +18,7 @@ class PostalCodeFactory extends Factory
             'postal_code' => rand(10000, 99999),
             'place_name' => $this->faker->city(),
             'state_name' => $this->faker->word(),
-            'state' => str($this->faker->randomLetter().$this->faker->randomLetter())->upper(),
+            'state' => str($this->faker->randomLetter() . $this->faker->randomLetter())->upper(),
             'county_name' => $this->faker->word(),
             'county_code' => rand(100, 999),
             'community_name' => null,
