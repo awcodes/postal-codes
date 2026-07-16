@@ -1,0 +1,35 @@
+# Dependabot config for a package on the shared CI baseline.
+# Copy to .github/dependabot.yml in the package repo.
+version: 2
+updates:
+  # Composer — keeps this package's dev tooling current (pint, phpstan/larastan,
+  # pest + plugins, rector, testbench). Grouped into one weekly PR to cut noise.
+  # The runtime `require` block is constrained loosely on purpose; review those bumps.
+  - package-ecosystem: composer
+    directory: "/"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    # Wait for a release to settle before opening a PR — longer for majors.
+    cooldown:
+      default-days: 7
+      semver-major-days: 14
+    groups:
+      dev-dependencies:
+        dependency-type: development
+      production-dependencies:
+        dependency-type: production
+
+  # GitHub Actions — the awcodes/.github caller is pinned to a moving major tag (@v1),
+  # so this only opens a PR when a new major (v2) ships: your heads-up to migrate.
+  # It also covers any other actions this repo adds (release, changelog, etc.).
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 7
+    groups:
+      github-actions:
+        patterns:
+          - "*"

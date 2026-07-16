@@ -1,0 +1,59 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "src/**"
+      - "config/**"
+      - "database/**"
+      - "resources/**"
+      - "routes/**"
+      - "tests/**"
+      - "composer.json"
+      - "composer.lock"
+      - "phpunit.xml*"
+      - "phpstan.neon*"
+      - "rector.php"
+      - "pint.json"
+      - ".github/workflows/**"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "src/**"
+      - "config/**"
+      - "database/**"
+      - "resources/**"
+      - "routes/**"
+      - "tests/**"
+      - "composer.json"
+      - "composer.lock"
+      - "phpunit.xml*"
+      - "phpstan.neon*"
+      - "rector.php"
+      - "pint.json"
+      - ".github/workflows/**"
+
+jobs:
+  ci:
+    uses: awcodes/.github/.github/workflows/laravel-package.yml@v1
+    with:
+      # Laravel 11 is intentionally omitted from CI (see docs/branch-specific-workflows.md)
+      # and is currently blocked by composer security advisories. It stays installable for
+      # consumers via testbench ^9.0 in composer.json.
+      #
+      # PHP 8.5 is omitted because it is uninstallable here, not by choice: this package
+      # requires maatwebsite/excel ^3.1, whose phpoffice/phpspreadsheet dependency declares
+      # `php >=7.4.0 <8.5.0`. Add the 8.5 rows once phpspreadsheet supports it.
+      matrix: |
+        [
+          {"php":"8.4","laravel":"13.*","testbench":"11.*","dependencies":"prefer-stable"},
+          {"php":"8.4","laravel":"12.*","testbench":"10.*","dependencies":"prefer-stable"},
+          {"php":"8.3","laravel":"12.*","testbench":"10.*","dependencies":"prefer-stable"}
+        ]
+      run-tests: true
+      run-lint: true
+      run-static-analysis: true
+      run-reformat: true

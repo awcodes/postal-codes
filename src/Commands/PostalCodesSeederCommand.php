@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Awcodes\PostalCodes\Commands;
 
 use Awcodes\PostalCodes\Imports\PostalCodeImport;
@@ -8,6 +10,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Excel;
 use ZipArchive;
 
 class PostalCodesSeederCommand extends Command
@@ -22,7 +25,9 @@ class PostalCodesSeederCommand extends Command
 
         DB::table('postal_codes')->truncate();
 
-        if (! Storage::disk('local')->exists("{$countryCode}.zip")) {
+        $disk = Storage::disk('local');
+
+        if (! $disk->exists("{$countryCode}.zip")) {
             $zipFile = Http::get("https://download.geonames.org/export/zip/{$countryCode}.zip");
 
             if ($zipFile->failed()) {
@@ -31,25 +36,23 @@ class PostalCodesSeederCommand extends Command
                 return self::FAILURE;
             }
 
-            $zipFilePath = storage_path("app/{$countryCode}.zip");
-
-            file_put_contents($zipFilePath, $zipFile->body());
-
-            $zip = new ZipArchive;
-
-            if ($zip->open($zipFilePath) === true) {
-                $zip->extractTo(storage_path('app'));
-                $zip->close();
-            } else {
-                $this->error("Could not extract zip file for {$countryCode}.");
-
-                return self::FAILURE;
-            }
-
-            $this->info("Extracted zip file for {$countryCode}.");
+            $disk->put("{$countryCode}.zip", $zipFile->body());
         }
 
-        $csvFilePath = storage_path("app/{$countryCode}.txt");
+        $zip = new ZipArchive;
+
+        if ($zip->open($disk->path("{$countryCode}.zip")) === true) {
+            $zip->extractTo($disk->path(''));
+            $zip->close();
+        } else {
+            $this->error("Could not extract zip file for {$countryCode}.");
+
+            return self::FAILURE;
+        }
+
+        $this->info("Extracted zip file for {$countryCode}.");
+
+        $csvFilePath = $disk->path("{$countryCode}.txt");
 
         try {
             $this->info("Importing data for {$countryCode}.");
@@ -58,18 +61,17 @@ class PostalCodesSeederCommand extends Command
                 ->withOutput($this->output)
                 ->import(
                     filePath: $csvFilePath,
-                    disk: null,
-                    readerType: \Maatwebsite\Excel\Excel::CSV
+                    readerType: Excel::CSV
                 );
 
             $this->info("Imported data for {$countryCode}.");
-        } catch (Exception $e) {
+        } catch (Exception) {
             $this->error("Could not import data for {$countryCode}.");
 
             return self::FAILURE;
         }
 
-        Storage::disk('local')->delete([
+        $disk->delete([
             'readme.txt',
             "{$countryCode}.zip",
             "{$countryCode}.txt",

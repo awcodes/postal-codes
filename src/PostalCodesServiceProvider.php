@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Awcodes\PostalCodes;
 
 use Awcodes\PostalCodes\Commands\PostalCodesSeederCommand;
@@ -16,7 +18,7 @@ class PostalCodesServiceProvider extends PackageServiceProvider
             ->hasMigration('create_postal_codes_table')
             ->runsMigrations()
             ->hasCommand(PostalCodesSeederCommand::class)
-            ->hasInstallCommand(function (InstallCommand $command) {
+            ->hasInstallCommand(function (InstallCommand $command): void {
                 $command
                     ->publishMigrations()
                     ->askToRunMigrations();

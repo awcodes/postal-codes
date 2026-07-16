@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Awcodes\PostalCodes\Models;
 
 use Awcodes\PostalCodes\Database\Factories\PostalCodeFactory;
@@ -28,11 +30,6 @@ class PostalCode extends Model
 {
     use HasFactory;
 
-    protected static function newFactory(): PostalCodeFactory
-    {
-        return new PostalCodeFactory;
-    }
-
     protected $fillable = [
         'country_code',
         'postal_code',
@@ -58,4 +55,9 @@ class PostalCode extends Model
         'lat' => 'float',
         'lng' => 'float',
     ];
+
+    protected static function newFactory(): PostalCodeFactory
+    {
+        return new PostalCodeFactory;
+    }
 }
