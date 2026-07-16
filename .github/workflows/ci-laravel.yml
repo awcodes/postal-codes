@@ -38,7 +38,7 @@ on:
 
 jobs:
   ci:
-    uses: awcodes/.github/.github/workflows/laravel-package.yml@v1
+    uses: awcodes/.github/.github/workflows/laravel-package.yml@v1.1.0
     with:
       # Laravel 11 is intentionally omitted from CI (see docs/branch-specific-workflows.md)
       # and is currently blocked by composer security advisories. It stays installable for
