@@ -20,15 +20,22 @@ updates:
       production-dependencies:
         dependency-type: production
 
-  # GitHub Actions — the awcodes/.github caller is pinned to a moving major tag (@v1),
-  # so this only opens a PR when a new major (v2) ships: your heads-up to migrate.
-  # It also covers any other actions this repo adds (release, changelog, etc.).
+  # GitHub Actions — covers any actions the package repo adds (release, changelog, etc.).
+  #
+  # The awcodes/.github caller is excluded on purpose. It tracks the moving major tag
+  # (@v1) so CI fixes reach every package at once (docs/versioning.md). Dependabot has no
+  # concept of a moving major: it reads @v1 as version "1" and offers the newest semver
+  # tag, which pins the package to a snapshot and can even be a downgrade, since v1 moves
+  # ahead of older release tags. Moving to a new major is a deliberate migration, not a
+  # Dependabot bump.
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
       interval: weekly
     cooldown:
       default-days: 7
+    ignore:
+      - dependency-name: "awcodes/.github/*"
     groups:
       github-actions:
         patterns:
