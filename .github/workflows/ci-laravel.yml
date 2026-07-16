@@ -43,11 +43,13 @@ jobs:
       # Laravel 11 is intentionally omitted from CI (see docs/branch-specific-workflows.md)
       # and is currently blocked by composer security advisories. It stays installable for
       # consumers via testbench ^9.0 in composer.json.
+      #
+      # PHP 8.5 is omitted because it is uninstallable here, not by choice: this package
+      # requires maatwebsite/excel ^3.1, whose phpoffice/phpspreadsheet dependency declares
+      # `php >=7.4.0 <8.5.0`. Add the 8.5 rows once phpspreadsheet supports it.
       matrix: |
         [
-          {"php":"8.5","laravel":"13.*","testbench":"11.*","dependencies":"prefer-stable"},
           {"php":"8.4","laravel":"13.*","testbench":"11.*","dependencies":"prefer-stable"},
-          {"php":"8.5","laravel":"12.*","testbench":"10.*","dependencies":"prefer-stable"},
           {"php":"8.4","laravel":"12.*","testbench":"10.*","dependencies":"prefer-stable"},
           {"php":"8.3","laravel":"12.*","testbench":"10.*","dependencies":"prefer-stable"}
         ]
