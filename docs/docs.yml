@@ -1,0 +1,8 @@
+version: 1
+
+title: Postal Codes
+
+navigation:
+  - index
+  - installation
+  - usage
