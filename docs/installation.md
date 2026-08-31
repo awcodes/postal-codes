@@ -7,7 +7,8 @@ description: Install the package with Composer, publish the migration, and prepa
 
 ## Requirements
 
-- PHP 8.2 or higher
+- PHP 8.3 or higher
+- Laravel 12 or higher
 - The `zip` PHP extension
 
 The package depends on [maatwebsite/excel](https://github.com/SpartnerNL/Laravel-Excel) for CSV importing and on [spatie/laravel-package-tools](https://github.com/spatie/laravel-package-tools). Composer installs both for you.
