@@ -25,7 +25,9 @@ Accepted values are the country codes listed at [download.geonames.org/export/zi
 Seeding runs through several steps: it downloads the country archive, extracts it, imports the rows in batches of 1,000, and then deletes the archive and the extracted files. A progress bar reports import progress, which is useful because larger countries contain hundreds of thousands of rows.
 
 > [!WARNING]
-> Seeding empties the `postal_codes` table before importing. The table holds one country at a time — seeding `CA` after `US` replaces the American data rather than adding to it.
+> The table holds one country at a time. Seeding `CA` after `US` replaces the American data rather than adding to it.
+
+The table is emptied at the point the import begins, not when the command starts, so a failed download or an unreadable archive leaves the existing rows untouched.
 
 ## Querying
 

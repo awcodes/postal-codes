@@ -144,6 +144,72 @@ it('fails when the archive is not a readable zip', function () {
         ->assertFailed();
 });
 
+it('fails when the archive does not contain the expected data file', function () {
+    $path = tempnam(sys_get_temp_dir(), 'geonames') . '.zip';
+
+    $zip = new ZipArchive;
+    $zip->open($path, ZipArchive::CREATE);
+    $zip->addFromString('readme.txt', 'GeoNames postal code files');
+    $zip->close();
+
+    $binary = file_get_contents($path);
+    unlink($path);
+
+    Http::fake([
+        'download.geonames.org/*' => Http::response($binary),
+    ]);
+
+    $this->artisan('postal-codes:seed', ['country' => 'US'])
+        ->expectsOutputToContain('The archive for US did not contain a US.txt data file.')
+        ->assertFailed();
+});
+
+it('leaves existing codes alone when the download fails', function () {
+    PostalCode::factory()->count(3)->create();
+
+    Http::fake([
+        'download.geonames.org/*' => Http::response('Not Found', 404),
+    ]);
+
+    $this->artisan('postal-codes:seed', ['country' => 'ZZ'])->assertFailed();
+
+    expect(PostalCode::count())->toBe(3);
+});
+
+it('leaves existing codes alone when the archive cannot be extracted', function () {
+    PostalCode::factory()->count(3)->create();
+
+    Http::fake([
+        'download.geonames.org/*' => Http::response('this is not a zip'),
+    ]);
+
+    $this->artisan('postal-codes:seed', ['country' => 'US'])->assertFailed();
+
+    expect(PostalCode::count())->toBe(3);
+});
+
+it('leaves existing codes alone when the archive has no data file', function () {
+    PostalCode::factory()->count(3)->create();
+
+    $path = tempnam(sys_get_temp_dir(), 'geonames') . '.zip';
+
+    $zip = new ZipArchive;
+    $zip->open($path, ZipArchive::CREATE);
+    $zip->addFromString('readme.txt', 'GeoNames postal code files');
+    $zip->close();
+
+    $binary = file_get_contents($path);
+    unlink($path);
+
+    Http::fake([
+        'download.geonames.org/*' => Http::response($binary),
+    ]);
+
+    $this->artisan('postal-codes:seed', ['country' => 'US'])->assertFailed();
+
+    expect(PostalCode::count())->toBe(3);
+});
+
 it('reuses an already downloaded archive instead of downloading again', function () {
     Storage::disk('local')->put('US.zip', geonamesZip());
 

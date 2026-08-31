@@ -23,8 +23,6 @@ class PostalCodesSeederCommand extends Command
     {
         $countryCode = $this->argument('country');
 
-        DB::table('postal_codes')->truncate();
-
         $disk = Storage::disk('local');
 
         if (! $disk->exists("{$countryCode}.zip")) {
@@ -52,10 +50,22 @@ class PostalCodesSeederCommand extends Command
 
         $this->info("Extracted zip file for {$countryCode}.");
 
+        if (! $disk->exists("{$countryCode}.txt")) {
+            $this->error("The archive for {$countryCode} did not contain a {$countryCode}.txt data file.");
+
+            return self::FAILURE;
+        }
+
         $csvFilePath = $disk->path("{$countryCode}.txt");
 
         try {
             $this->info("Importing data for {$countryCode}.");
+
+            // Emptied here rather than at the start of the command. The table holds
+            // one country at a time, so the import does have to clear it — but doing
+            // that before the archive has downloaded and extracted means a bad country
+            // code or a network failure wipes the existing data and puts nothing back.
+            DB::table('postal_codes')->truncate();
 
             (new PostalCodeImport)
                 ->withOutput($this->output)
