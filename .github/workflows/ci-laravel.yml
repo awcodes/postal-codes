@@ -40,15 +40,16 @@ jobs:
   ci:
     uses: awcodes/.github/.github/workflows/laravel-package.yml@v1
     with:
-      # Laravel 11 is intentionally omitted from CI (see docs/branch-specific-workflows.md)
-      # and is currently blocked by composer security advisories. It stays installable for
-      # consumers via testbench ^9.0 in composer.json.
+      # Laravel 11 and PHP 8.2 are no longer supported: maatwebsite/excel ^4.0 requires
+      # PHP ^8.3 and illuminate/support ^12.0 || ^13.0, so composer.json now floors at
+      # PHP ^8.3 / testbench ^10.0.
       #
-      # PHP 8.5 is omitted because it is uninstallable here, not by choice: this package
-      # requires maatwebsite/excel ^3.1, whose phpoffice/phpspreadsheet dependency declares
-      # `php >=7.4.0 <8.5.0`. Add the 8.5 rows once phpspreadsheet supports it.
+      # PHP 8.5 was previously uninstallable because phpspreadsheet 1.x declared
+      # `php >=7.4.0 <8.5.0`. Excel 4 pulls phpspreadsheet ^5.8, which has no upper bound,
+      # so the 8.5 row is back.
       matrix: |
         [
+          {"php":"8.5","laravel":"13.*","testbench":"11.*","dependencies":"prefer-stable"},
           {"php":"8.4","laravel":"13.*","testbench":"11.*","dependencies":"prefer-stable"},
           {"php":"8.4","laravel":"12.*","testbench":"10.*","dependencies":"prefer-stable"},
           {"php":"8.3","laravel":"12.*","testbench":"10.*","dependencies":"prefer-stable"}
