@@ -1,0 +1,24 @@
+laravel: '@testbench'
+
+seeders:
+  - Workbench\Database\Seeders\DatabaseSeeder
+
+workbench:
+  start: '/'
+  install: false
+  health: false
+  discovers:
+    web: true
+    api: false
+    commands: true
+    components: false
+    factories: false
+    views: true
+  build:
+    - create-sqlite-db
+    - db-wipe
+    - migrate-fresh
+  sync:
+    - from: storage
+      to: workbench/storage
+      reverse: true

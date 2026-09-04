@@ -37,6 +37,22 @@ Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed re
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
+## Development
+
+Install dependencies:
+
+    composer install
+
+Run the test suite:
+
+    composer test
+
+Start the Workbench application:
+
+    composer serve
+
+The Workbench is available at [http://localhost:8000](http://localhost:8000) with a small local postal-code dataset. It does not download data from GeoNames unless you explicitly run the seed command.
+
 ## Security Vulnerabilities
 
 Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
