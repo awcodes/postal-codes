@@ -23,6 +23,9 @@ parameters:
         - workbench
         # This package ships no config/ directory, so that path stays out — phpstan
         # hard-errors on a listed path that does not exist.
+        # Migrations and factories are shipped code. phpstan flags wrong-arity
+        # Blueprint calls here — the class of bug postal-codes#12 turned out to be.
+        - database
     excludePaths:
         analyse:
             # workbench/storage is gitignored, but it appears the moment anyone runs the
