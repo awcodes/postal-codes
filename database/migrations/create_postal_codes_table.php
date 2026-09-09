@@ -10,7 +10,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('postal_codes', function (Blueprint $table) {
+        Schema::create('postal_codes', function (Blueprint $table): void {
             $table->id();
 
             $table->string('country_code')->nullable();
