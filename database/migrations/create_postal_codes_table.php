@@ -22,8 +22,14 @@ return new class extends Migration
             $table->string('county_code')->nullable();
             $table->string('community_name')->nullable();
             $table->string('community_code')->nullable();
-            $table->float('lat', 10, 8);
-            $table->float('lng', 11, 8);
+            // Laravel 11 narrowed Blueprint::float() to float($column, $precision = 53).
+            // The old (total, places) arguments are silently discarded, so `float('lat', 10, 8)`
+            // set precision 10 -- and MySQL maps FLOAT(p) with p <= 23 to a 4-byte single
+            // precision column, about 7 significant digits. Coordinates need 10 (e.g.
+            // 40.71277800), so they were being rounded on write. The default precision of 53
+            // maps to DOUBLE, which stores them exactly.
+            $table->float('lat');
+            $table->float('lng');
             $table->integer('accuracy')->nullable();
 
             $table->timestamps();
