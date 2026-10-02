@@ -54,7 +54,7 @@ on:
 
 jobs:
   ci:
-    uses: awcodes/.github/.github/workflows/laravel-package.yml@v1
+    uses: awcodes/.github/.github/workflows/laravel-package.yml@ad63f1536b965fed92274516cb81f172b1d60e1a # v1.4.3
     with:
       # Laravel 11 and PHP 8.2 are no longer supported: maatwebsite/excel ^4.0 requires
       # PHP ^8.3 and illuminate/support ^12.0 || ^13.0, so composer.json now floors at
