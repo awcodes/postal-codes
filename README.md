@@ -29,7 +29,7 @@ Please see the [releases](https://github.com/awcodes/postal-codes/releases) for 
 
 ## Contributing
 
-Install dependencies with `composer install`, run the test suite with `composer test`, and start the Workbench application with `composer serve`. The Workbench is available at [http://localhost:8000](http://localhost:8000) with a small local postal-code dataset. It does not download data from GeoNames unless you explicitly run the seed command.
+Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
 
 ## Security Vulnerabilities
 
