@@ -1,6 +1,6 @@
 {
     "name": "awcodes/postal-codes",
-    "description": "This is a package to easily install and use postal codes in your Laravel application from GeoNames.org",
+    "description": "Install a queryable table of postal codes in a Laravel application, seeded from GeoNames country data.",
     "keywords": [
         "awcodes",
         "laravel",
@@ -22,6 +22,7 @@
         "spatie/laravel-package-tools": "^1.14.0"
     },
     "require-dev": {
+        "awcodes/focus": "^0.2",
         "larastan/larastan": "^3.0",
         "laravel/pint": "^1.0",
         "nunomaduro/collision": "^8.0",
@@ -69,6 +70,10 @@
             "Composer\\Config::disableProcessTimeout",
             "@build",
             "@php vendor/bin/testbench serve --ansi"
+        ],
+        "focus": [
+            "Composer\\Config::disableProcessTimeout",
+            "focus"
         ]
     },
     "config": {
