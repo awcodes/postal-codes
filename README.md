@@ -1,57 +1,35 @@
-# This is my package postal-codes
+# Postal Codes
+
+Install a queryable table of postal codes in a Laravel application, seeded from [GeoNames](https://www.geonames.org/) country data.
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/awcodes/postal-codes.svg?style=flat-square)](https://packagist.org/packages/awcodes/postal-codes)
 [![Total Downloads](https://img.shields.io/packagist/dt/awcodes/postal-codes.svg?style=flat-square)](https://packagist.org/packages/awcodes/postal-codes)
 
-This is a package to easily install and use postal codes in your Laravel application. All data is provided by [GeoNames](https://www.geonames.org/) data dumps. You can see the available countries at [https://download.geonames.org/export/zip/](https://download.geonames.org/export/zip/).
+## Documentation
 
-<!-- [docs_start] -->
+The full documentation lives at **[docs.aw.codes/postal-codes](https://docs.aw.codes/postal-codes/1.x)**.
 
-## Installation & Usage
+## Requirements
 
-You can install the package via composer:
+- PHP 8.3 or higher
+- Laravel 12 or higher
+- The `zip` PHP extension
+
+## Installation
 
 ```bash
 composer require awcodes/postal-codes
 ```
 
-If you need to publish the migration you may do so with:
-
-```bash
-php artisan postal-codes:install
-```
-
-Then the only thing left to do is to seed your data. This can be done with the `postal-codes:seed` command.
-
-```bash
-php artisan postal-codes:seed {country=US}
-```
-
-<!-- [docs_end] -->
+The table is empty until you seed a country's data with `php artisan postal-codes:seed`. See [Usage](https://docs.aw.codes/postal-codes/1.x/usage) for that step.
 
 ## Changelog
 
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+Please see the [releases](https://github.com/awcodes/postal-codes/releases) for what has changed recently.
 
 ## Contributing
 
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
-
-## Development
-
-Install dependencies:
-
-    composer install
-
-Run the test suite:
-
-    composer test
-
-Start the Workbench application:
-
-    composer serve
-
-The Workbench is available at [http://localhost:8000](http://localhost:8000) with a small local postal-code dataset. It does not download data from GeoNames unless you explicitly run the seed command.
+Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
 
 ## Security Vulnerabilities
 
